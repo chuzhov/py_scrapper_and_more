@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 import requests
+import json
 from bs4 import BeautifulSoup
 
 # Load environment variables from .env file
@@ -21,9 +22,6 @@ login_data = {
     "email": USERNAME,
     "password": PASSWORD
 }
-
-import requests
-import json
 
 # Create a session to persist cookies across requests
 session = requests.Session()
