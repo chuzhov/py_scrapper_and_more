@@ -2,7 +2,7 @@ import logging
 import os
 from logging.handlers import RotatingFileHandler
 
-def setup_logger():
+def setup_logger(service_name: str = "api") -> logging.Logger:
     # Create log directory if it doesn't exist
     if not os.path.exists('log'):
         os.makedirs('log')
@@ -12,8 +12,9 @@ def setup_logger():
     logger.setLevel(logging.INFO)
     
     # Create handlers (1MB max size, keep 1 backup)
+    log_file_path = os.path.join('log', f'{service_name}.log')
     handler = RotatingFileHandler(
-        'log/rabota_ua_interactions.log',
+        log_file_path,
         maxBytes=1024*1024,  # 1MB
         backupCount=1,
         encoding='utf-8'

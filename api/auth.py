@@ -31,6 +31,8 @@ class Auth:
 
             if get_response.status_code == 200:
                 self.logger.debug("Touch GET request successful!")
+                # Check if the response contains the expected content
+
                 return True
             else:
                 self.logger.error(f"GET request failed with status code: {get_response.status_code}")
@@ -92,11 +94,19 @@ class Auth:
         """Perform login and update headers with JWT token"""
         # Step 1: Make GET request
         if not self._make_get_request():
+            self.logger.error("Toching GET request failed. Cannot proceed to POST request.")
             return False
+        
+        # Update headers with updated cookies
+        # self.api_headers["Cookie"] = "; ".join([f"{key}={value}" for key, value in self.session.cookies.items()])
+
+        # Update header with referer
+        self.api_headers["Referer"] = self.touch_url
 
         # Step 2: Make POST request
         post_response = self._make_post_request()
         if not post_response:
+            self.logger.error("Login POST request failed. Cannot proceed to token extraction.")
             return False
 
         # Step 3: Extract token and update global headers
