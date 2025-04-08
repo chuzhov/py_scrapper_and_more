@@ -15,7 +15,7 @@ load_dotenv()
 
 # Set up logging
 from utils.logger import setup_logger
-logger = setup_logger()
+logger = setup_logger("rabota_api")
 
 USERNAME = os.getenv("ROBOTA_USERNAME")
 PASSWORD = os.getenv("ROBOTA_PASSWORD")
